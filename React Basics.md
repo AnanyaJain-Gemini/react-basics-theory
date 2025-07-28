@@ -116,3 +116,18 @@ const [count, setCount] = useState(0);
   }, [count]);
 
 ```
+#### **The Flow of `useEffect()`:**
+React **renders first**, and after the DOM has updated, it runs the **cleanup from the previous effect**, then the **new effect.** 
+```jsx
+Render with count = 0
+Effect
+Render with count = 1
+Cleanup   ← before effect
+Effect
+Render with count = 2
+Cleanup   ← before effect
+Effect
+Component unmounts
+Cleanup   ← before removal
+```
+> `useEffect` always runs after render. Cleanup from previous effect also runs after render, before the new effect runs
