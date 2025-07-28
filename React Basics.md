@@ -5,6 +5,9 @@
 **⦁	State:** It refers to variables or data stored, that can be changed; change in state renders the DOM.
 State refers to data that can change over time, like user input or fetched data.
 
+**⦁	Props:** Props are read-only inputs that you pass from one component (parent) to another (child) in React.
+They allow data to flow downward from parent to child, making your UI dynamic and reusable.
+
 **⦁	useCallback Hook:** It is a React Hook that lets you cache a function definition between re-renders.
 ```js
 const cachedFn = useCallback(fn, [dependencies])
