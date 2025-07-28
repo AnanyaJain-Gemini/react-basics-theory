@@ -96,6 +96,7 @@ const [count, setCount] = useState(0);
 
     return () => {
 // this will run each time "BEFORE" a new component mounts
+// this will run before the next effect when "count" changes, or before the component unmounts
       console.log("Cleanup runs with count =", count);
     };
   }, [count]);
