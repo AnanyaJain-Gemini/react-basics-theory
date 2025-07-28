@@ -54,7 +54,7 @@ It memorizes a function, so it’s not recreated on every render unless its depe
 
 #### **3.	`useMemo` Hook - To Memoize Calculations** 
 `useMemo` memoizes a value/result, like expensive calculations.
-```
+```js
 const memoizedValue = useMemo(() => {
   return computeExpensiveValue(input);
 }, [input]);  // Recomputes when input changes
