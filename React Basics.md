@@ -75,12 +75,15 @@ const memoizedValue = useMemo(() => {
 `useEffect` lets you run code after a render — like fetching data, setting up timers, subscriptions, etc. It’s great for side-effects like API calls, logging, or timers.
 
 ```js
+
 useEffect(() => {
+// this will run only once when the component mounts
   const timer = setInterval(() => {
     console.log("tick");
   }, 1000);
 
   return () => {
+// this will run immediately before the component unmounts
     clearInterval(timer); // cleanup
   };
 }, []);
@@ -88,9 +91,11 @@ useEffect(() => {
 
 const [count, setCount] = useState(0);
   useEffect(() => {
+// this will run firstly when the component mounts and then everytime "count" changes
     console.log("Effect runs with count =", count);
 
     return () => {
+// this will run each time "BEFORE" a new component mounts
       console.log("Cleanup runs with count =", count);
     };
   }, [count]);
