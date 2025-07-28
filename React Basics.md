@@ -33,7 +33,8 @@ Hooks are special functions in React that let you use features like **state, lif
 `useState` allows your component to **remember values** (like user input, counters, etc.).
 
 #### **2.	`useCallback` Hook - To Memoize Functions:** 
-`useCallback` is a React Hook that lets you cache (or remembers) a **function definition** between re-renders.
+`useCallback` is a React Hook that lets you cache (or remembers) a **function definition** between re-renders. It memorizes a function, so it’s not recreated on every render unless its dependencies change.
+
 ```js
 // const cachedFn = useCallback(fn, [dependencies])
 
@@ -50,7 +51,6 @@ const handleClick = useCallback(() => {
 }); // recreated on every render; same as not using "useCallback"
 
 ```
-It memorizes a function, so it’s not recreated on every render unless its dependencies change.
 
 #### **3.	`useMemo` Hook - To Memoize Calculations** 
 `useMemo` memoizes a value/result, like expensive calculations.
@@ -75,7 +75,21 @@ const memoizedValue = useMemo(() => {
 `useEffect` lets you run code after a render — like fetching data, setting up timers, subscriptions, etc. It’s great for side-effects like API calls, logging, or timers.
 
 ```js
+useEffect(() => {
+  console.log("Runs only once when the component mounts");
+}, []);
 
+useEffect(() => {
+  console.log("Runs on mount + when count changes");
+}, [count]);
+
+useEffect(() => {
+  console.log("Runs every time i.e. after every render");  // rarely used
+}); // no dependencies
+
+```
+> Imagine turning on a fan after entering a room. You don't turn it on while entering, but immediately after.
+```js
 useEffect(() => {
 // this will run only once when the component mounts
   const timer = setInterval(() => {
@@ -100,22 +114,5 @@ const [count, setCount] = useState(0);
       console.log("Cleanup runs with count =", count);
     };
   }, [count]);
-
-```
-
-> Imagine turning on a fan after entering a room. You don't turn it on while entering, but immediately after.
-
-```js
-  useEffect(() => {
-  console.log("Runs only once when the component mounts");
-}, []);
-
-useEffect(() => {
-  console.log("Runs on mount + when count changes");
-}, [count]);
-
-useEffect(() => {
-  console.log("Runs every time i.e. after every render");  // rarely used
-}); // no dependencies
 
 ```
