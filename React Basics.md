@@ -35,12 +35,38 @@ Hooks are special functions in React that let you use features like **state, lif
 #### **2.	`useCallback` Hook - To Memoize Functions:** 
 `useCallback` is a React Hook that lets you cache (or remembers) a **function definition** between re-renders.
 ```js
-const cachedFn = useCallback(fn, [dependencies])
+// const cachedFn = useCallback(fn, [dependencies])
+
+const handleClick = useCallback(() => {
+  console.log("clicked");
+}, []); // function is created once; only defined once
+
+const handleClick = useCallback(() => {
+  console.log("clicked");
+}, [var]); // recreated when "var" changes
+
+const handleClick = useCallback(() => {
+  console.log("clicked");
+}); // recreated on every render; same as not using "useCallback"
+
 ```
 It memorizes a function, so it’s not recreated on every render unless its dependencies change.
 
 #### **3.	`useMemo` Hook - To Memoize Calculations** 
 `useMemo` memoizes a value/result, like expensive calculations.
+```
+const memoizedValue = useMemo(() => {
+  return computeExpensiveValue(input);
+}, [input]);  // Recomputes when input changes
+
+const memoizedValue = useMemo(() => {
+  return computeExpensiveValue(input);
+}, []);  // Computes once
+
+const memoizedValue = useMemo(() => {
+  return computeExpensiveValue(input);
+});  // Recomputes every render
+```
 
 #### **4.	`useRef` Hook - To Store Mutable Values** 
 `useRef` stores a reference to a value or DOM element that doesn’t trigger re-renders.
@@ -48,10 +74,42 @@ It memorizes a function, so it’s not recreated on every render unless its depe
 #### **5.	`useEffect` Hook - To Run Side Effects** 
 `useEffect` lets you run code after a render — like fetching data, setting up timers, subscriptions, etc. It’s great for side-effects like API calls, logging, or timers.
 
+```js
+useEffect(() => {
+  const timer = setInterval(() => {
+    console.log("tick");
+  }, 1000);
+
+  return () => {
+    clearInterval(timer); // cleanup
+  };
+}, []);
+
+
+const [count, setCount] = useState(0);
+  useEffect(() => {
+    console.log("Effect runs with count =", count);
+
+    return () => {
+      console.log("Cleanup runs with count =", count);
+    };
+  }, [count]);
+
+```
+
 > Imagine turning on a fan after entering a room. You don't turn it on while entering, but immediately after.
 
 ```js
   useEffect(() => {
-    console.log('Component rendered or count changed');
-  }, [count]); // Runs when 'count' changes
+  console.log("Runs only once when the component mounts");
+}, []);
+
+useEffect(() => {
+  console.log("Runs on mount + when count changes");
+}, [count]);
+
+useEffect(() => {
+  console.log("Runs every time i.e. after every render");  // rarely used
+}); // no dependencies
+
 ```
